@@ -91,7 +91,7 @@ void userAction(int i){
     int selection=100;
 
     printf("\n\n");
-    while (selection){
+    do{
         printf("Select an option (1,2,...) to proceed\n");
         printf("1. View balance\n");
         printf("2. Fund transfer\n");
@@ -113,7 +113,7 @@ void userAction(int i){
                     break;
             default: printf("\nPlease enter a valid option\n\n");
         }
-    }
+    } while (selection);
 }
 
 /*
