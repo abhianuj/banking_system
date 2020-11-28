@@ -57,7 +57,11 @@ struct report                                   //To store monthly report from f
     char time[20];                              //Date of unauthorised access
 }*r;
 
-//Function to get Number of lines/records available in file
+/*  THIS FUNCTION TAKES IN FILENAME IN PARAMETER AND RETURNS TOTAL COUNT OF ENTRIES IN THE SPECIFIED FILE
+    f   -FILE POINTER
+    chr -USED TO STORE EACH CHARACTER OF A FILE
+    n   -STORES COUNT OF ENTRIES
+ */
 int no_of_records(const char *filename)
 {
     FILE *f;
@@ -76,7 +80,9 @@ int no_of_records(const char *filename)
     return n;
 }
 
-//Function to read bdata.txt file and store it in structure array
+/*  THIS FUNCTION TAKES IN NUMBER OF ENTRIES TO PICK AND STORES BANK DETAILS AS A STRUCTURE ARRAY DEFINED IN GLOBAL SCOPE
+    f - FILE POINTER
+*/
 void scan(int n)
 {
     FILE *f;
@@ -90,7 +96,15 @@ void scan(int n)
     fclose(f);
 }
 
-//Function to check if entered user-name exist or not
+/*  THIS FUNCTION TAKES IN NUMBER OF ENTRIES AUTHENTICATES USER AND AUTHORIZES USER AS ADMIN OR USER ROLE BY CALLING SEPERATE PASSWORD 
+    VALIDATION FUNTIONS OF EACH ROLE 
+    i       -   TO RUN A LOOP
+    r_flag  -   ROLE FLAG STORES ROLE 1 FOR ADMIN 2 FOR USER
+    f_count -   STORES FAILURE COUNT
+    flag    -   CHECKS IF USERNAME CORRECT OR NOT
+    tmp     -   STORES INDEX OF ENTRY IN ARRAY
+    uname   -   STORE USENAME FROM INPUT
+*/
 void user_name_validation(int n)
 {
     int i,r_flag=0,f_count,flag=0,tmp=0;
@@ -140,7 +154,15 @@ void user_name_validation(int n)
     }
 }
 
-//Function to verify if user entered correct password or not
+/*  THIS FUNCTION TAKES INDEX OF ENTRY OF THE CURRENT USER, FAILURE COUNT AND TOTAL NUMBER OF ENTRIES IN ARRAY,
+    CHECKS IF USER IS BLOCKED AND IF PASSWORD IS CORRECT OR NOT,
+    AND MAINTAINS LOGS IN A FILE WHICH IS USED LATER,
+    AFTER VALIDATING SEND THE CONTROL TO USER MENU
+    rem     - STORES REMAINING ATTEMPTS
+    flag    - SIGNIFIES IF VALID PASSWORD ENTERED OR NOT 
+    count   - STORES CURRENT FAILURE COUNT
+    upwd    - STORES PASSWORD GIVEN AS INPUT
+ */
 void user_pwd_validation(int i,int f_count,int n)
 {
     int rem,flag=0,count=0,p=0;
@@ -208,8 +230,12 @@ void user_pwd_validation(int i,int f_count,int n)
         user_name_validation(n);
     }
 }
-
-//Function to check if admin entered correct password or not
+/*  THIS FUNCTION TAKES INDEX OF ENTRY OF THE CURRENT USER AND TOTAL NUMBER OF ENTRIES IN ARRAY,
+    CHECKS IF ADMIN PASSWORD IS CORRECT OR NOT,
+    AFTER VALIDATING SEND THE CONTROL TO ADMIN MENU
+    flag2    - SIGNIFIES IF VALID PASSWORD ENTERED OR NOT 
+    upwd    - STORES PASSWORD GIVEN AS INPUT
+ */
 void admin_pwd_validation(int i,int n)
 {
     int flag2=0,p=0;
@@ -251,7 +277,14 @@ void admin_pwd_validation(int i,int n)
     while(flag2==0);
 }
 
-//Function to read monthly report of unauthorised access(monthly_report.txt) and store it in structure array
+
+/*  THIS FUNCTION IS CALLED THROUGH ADMIN MENU RETURNS AUTHENTICATION LOGS
+    f   - FILE POINTER POINTS TO MONTHLY LOGS FILE
+    n   - STORE NUMBER OF ENTRIES IN MONTHLY LOGS 
+    j   - TO RUN A LOOP
+    i   - TO RUN A LOOP
+    r   - DYNAMICALLY INITIALIZES REPORT STRUCTURE ARRAY
+ */
 void scan_monthly_report()
 {
     FILE *f;
@@ -303,7 +336,10 @@ void scan_monthly_report()
     }
 }
 
-//Function to show Bank functionality to user
+/*  DISPLAYS USER MENU AND CALLS RELEVANT FUNCTIONS
+    selection   - STORES CHOICE AS INTEGER
+    choice      - STORES CHOICE AS CHARACTER
+ */
 void userAction(int i,int n)
 {
     int selection;
@@ -341,7 +377,7 @@ void userAction(int i,int n)
             case 52:
                     system("@cls||clear");
                     printf("\n+------------------------------------------------------+\n");
-                    printf("\n\tThank You %s you for using our bank.\n\t\t!! Have a Nice Day !!\n",s[i].name);
+                    printf("\n\tThank You %s for using our bank.\n\t\t!! Have a Nice Day !!\n",s[i].name);
                     printf("\n+------------------------------------------------------+\n");
                     user_name_validation(n);
                     break;
@@ -354,7 +390,14 @@ void userAction(int i,int n)
     while(1);
 }
 
-//Function to transfer fund to another account
+/*  THIS FUNCTION TAKES INDEX OF CURRENT USER AND TOTAL NUMBER OF ENTRIES AS PARAMETER
+    TAKES ACCOUNT NUMBER AS INPUT IF USER WANT TO SEND MONEY AND VALIDATES ACCOUNT NUMBER
+    AFTER SUCCESSFUL TRANSACTION SENDS CONTROL BACK TO USER MENU
+    accn    - STORES INPUTED ACCOUNT NUMBER OF RECIEVER
+    count   - STORES NUMBER OF DIGITS IN ACCOUNT NUMBER
+    tmp     - USED TO EXTRACT NUMBER OF DIGITS
+    amou    - STORES THE AMOUNT TO BE TRANSFERRED
+ */
 void fundTransfer(int i,int n)
 {
     int accn,count=0,tmp=0;
@@ -429,7 +472,15 @@ void fundTransfer(int i,int n)
     }
 }
 
-//Function to store/write transaction details to file
+/*  
+    THIS FUNCTION TAKES ACCOUNT NUMBER OF RECIEVER , AMOUNT AND INDEX OF SENDER AND WRITES TRANSACTION DETAILS TO FILE
+    fptr        - FILE POINTER POINTING TO TRANSACTION DETAILS FILE
+    acc_no      - STORES THE ACCOUNT NUMBER OF SENDER
+    time        - STORES CURRENT TIME
+    date        - STORES CURRENT DATE
+    tmp         - STORES CONVERTED ACCOUNT NUMBER FROM INTEGER TO STRING
+    filename    - STORES THE FILENAME IN WHICH TRANSACTION TO BE SAVED
+*/
 void transaction_details(int accn,float amount,int i)
 {
     FILE *fptr;
@@ -456,7 +507,15 @@ void transaction_details(int accn,float amount,int i)
     fclose(fptr);
 }
 
-//Function to read transaction history and display it
+/*  THIS FUNCTION TAKES INDEX OF CURRENT USER AND TOTAL NUMBER OF USERS AS PARAMETERS, READS TRANSACTION HISTORY AND DISPLAYS IT
+    f           -  FILE POINTER POINTS TO TRANSACTIONS FILE OF USER
+    filename    -  STORES THE FILENAME 
+    tmp         -  STORES CONVERTED ACCOUNT NUMBER FROM INTEGER TO STRING
+    n           -  STORES NUMBER OF RECORDS
+    j           -  TO RUN A LOOP
+    acc_no      -  STORES ACCOUNT NUMBER OF USER
+    t           -  INITIALIZES TRANSACTION STRUCTURE DYNAMICALLY
+*/
 void transaction_history(int i,int q)
 {
     FILE *f;
@@ -508,7 +567,12 @@ void transaction_history(int i,int q)
     fclose(f);
 }
 
-//Function to show Admin authorities to user
+/*  THIS FUNCTION TAKES TOTAL NUMBER OF ENTRIES IN BANK DETAILS FILE IN PARAMETERS, DISPLAYS ADMIN MENU AND CALLS RELEVENT FUNCTIONS
+    i           - USED TO RUN A LOOP
+    selection   - STORE ENTERED CHOICE AS A NUMBER
+    t           - STORES NUMBER OF ENTRIES IN MONTHLY REPORT
+    choice      - STORES ENTERED CHOICE AS A CHARACTER
+*/
 void admin_authorities(int n)
 {
     int i,selection,t=0;
@@ -573,7 +637,11 @@ void admin_authorities(int n)
     while(1);
 }
 
-//Function to display blocked user
+/*  THIS FUNCTION TAKES TOTAL NUMBER OF ENTRIES IN BANK DETAILS FILE IN PARAMETERS, CHECKS ROLE AND LOGIN FAILURE COUNT 
+    AND DISPLAYS BLOCKED USERS
+    i       - USED TO RUN A LOOP
+    flag    - SHOWES IF BLOCKED ACCOUNT FOUND OR NOT 
+*/
 void disp_blocked_users(int n)
 {
 	int i,flag=0;
@@ -604,7 +672,12 @@ void disp_blocked_users(int n)
     }
 }
 
-//Function to unblock user
+/*  THIS FUNCTION TAKES TOTAL NUMBER OF ENTRIES IN BANK DETAILS FILE IN PARAMETERS, CHECKS IF USER BLOCKED, IF BLOCKED, INPUTS ACCOUNT NUMBER AND UNBLOCKS IF VALID
+    i       - USED TO RUN A LOOP
+    acc_no  - USED TO INPUT ACCOUNT NUMBER OF BLOCKED USER
+    flag    - SIGNIFIES IF ANY BLOCKED USER FOUND
+    flag1   - SIGNIFIES IF ENTERED ACCOUNT NUMBER MATCHED OR NOT
+*/
 void unblock_user(int n)
 {
     int i,acc_no,flag=0,flag1=0;
@@ -614,6 +687,7 @@ void unblock_user(int n)
         if(s[i].role==2 && s[i].l_count==3)
         {
             flag=1;
+            break;
         }
     }
 
@@ -655,7 +729,7 @@ void unblock_user(int n)
     }
 }
 
-//Function to write to monthly_report.txt for each unauthorised access made
+/* THIS FUNCTION TAKES INDEX OF ENTRY AND NUMBER OF FAILED ATTEMPTS AS PARAMETERS AND WRITES IT TO MONTHLY REPORT FILE */
 void login_attempt(int i,int count)
 {
     FILE *fptr;
@@ -671,7 +745,7 @@ void login_attempt(int i,int count)
     fclose(fptr);
 }
 
-//Function to update in file after login attempt fails
+/* THIS FUNCTION TAKES INDEX OF ENTRY, TOTAL NUMBER OF ENTRIES AND NUMBER OF FAILED ATTEMPT AS PARAMETERS AND WRITES IT TO BANK DETAILS FILE TO BLOCK THEIR ACCESS */
 void write_to_file(int i,int n,int count)
 {
     FILE *fptr;
@@ -697,7 +771,7 @@ void write_to_file(int i,int n,int count)
     fclose(fptr);
 }
 
-//Function to convert number to string
+/* THIS FUNCTION TAKES STRING POINTER AND INTEGER NUMBER AND CONVERTS THAT NUMBER TO STRING*/
 void tostring(char str[], int num)
 {
     int i, rem, len = 0, n;

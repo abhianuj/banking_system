@@ -1,0 +1,43 @@
+Description
+This product simulates a secured banking system which covers the following aspects:-
+•	The system should accept the user’s credentials and check if the user is legitimate.
+•	In case the user is legitimate it should ask the user whether he wants to know the account balance, make fund transfer and update balance.
+•	In case user is not legitimate inform the admin about unauthorized access
+•	If more than 3 wrong login attempts are made for the user then lock the account and do not allow access for that account
+•	Secured password based account unlock by legitimate user
+•	Get monthly reports of unauthorized access
+
+Features
+
+    Authentication
+        For regular user, user gets authenticated covering two scenarios:-
+        •	If username is invalid tells user to retry
+        •	If username is valid asks for passwords with 3 attempts after which account gets locked.
+        For administrators, the process is same except there is no limit to number of attempts.
+
+    Authorization
+        The user of the product is categorized with two roles:-
+        •	Administrator
+        •	User
+
+    User Role
+        User is provided with a set of options such as:-
+        •   VIEW BALANCE       - They can see their existing balance.
+        •   FUND TRANSFER      - They can send money to other accounts.
+        •   TRANSATION HISTORY - They can see their transaction history.
+        •   LOGOUT             - Logged out back to main screen.
+
+    Admin Role
+        •   VIEW BLOCKED USER    -   Admin can see list of blocked users
+        •   UNBLOCK USER         -   Admin can unblock locked users
+        •   VIEW MONTHLY REPORT OF UNAUTHORISED ACCESS - Admin can see monthly report of unauthorised access. 
+        •   LOGOUT 
+Technical requirements
+
+
+Limitations
+
+    Currently new users can not be added to the system.
+
+
+
