@@ -1,0 +1,12 @@
+1 admin01 admin01 0.00 1 0
+1 admin02 admin02 0.00 1 0
+56756 Nandini nandini01 59611.78 2 0
+76567 Anurag anurag02 75062.11 2 0
+87656 Yukta yukta03 54490.91 2 1
+98765 Abhijeet abhijeet04 76665.98 2 0
+76456 Gaurab gaurab05 86976.69 2 0
+90876 Utkarsh utkarsh27 99091.06 2 0
+24565 Arnav arnav06 87543.90 2 0
+32456 Sugata sugata07 87344.00 2 0
+54576 Stuti stuti10 0.00 2 1
+54234 Rohit rohit11 7787.00 2 0
